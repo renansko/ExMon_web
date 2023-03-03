@@ -6,15 +6,35 @@ defmodule ExMonWeb.TrainersController do
   def create(conn, params) do
     params
     |> ExMon.create_trainer()
-    |> handle_response(conn)
+    |> handle_response(conn, "create.json", :created)
   end
 
-  defp handle_response({:ok, trainer}, conn) do
+  def delete(conn, %{"id" => id}) do
+    id
+    |> ExMon.delete_trainer()
+    |> handle_delete(conn)
+  end
+
+  def show(conn, %{"id" => id}) do
+    id
+    |> ExMon.fetch_trainer()
+    |> handle_response(conn, "show.json", :ok)
+  end
+
+  defp handle_delete({:ok, _trainier}, conn) do
+    conn
+    |> put_status(:no_content)
+    |> text("")
+  end
+
+  defp handle_delete({:error, _reason} = error, conn), do: error
+
+  defp handle_response({:ok, trainer}, conn, view, status) do
     conn
     # :ok === 200
-    |> put_status(:created)
-    |> render("create.json", trainer: trainer)
+    |> put_status(status)
+    |> render(view, trainer: trainer)
   end
 
-  defp handle_response({:error, _changeset} = error, conn), do: error
+  defp handle_response({:error, _changeset} = error, conn, _view, _status), do: error
 end
