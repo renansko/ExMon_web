@@ -1,8 +1,7 @@
 defmodule ExMon.Trainer.Create do
   use ExUnit.Case
 
-  alias ExMon.Trainer
-  alias ExMon.Repo
+  alias ExMon.{Trainer, Repo}
 
   def call(params) do
     params

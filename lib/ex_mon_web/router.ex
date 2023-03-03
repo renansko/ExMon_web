@@ -21,9 +21,10 @@ defmodule ExMonWeb.Router do
   # end
 
   # Other scopes may use custom stacks.
-  # scope "/api", ExMonWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", ExMonWeb do
+    pipe_through :api
+    resources "/trainers", TrainersController
+  end
 
   # Enables LiveDashboard only for development
   #
@@ -58,5 +59,6 @@ defmodule ExMonWeb.Router do
     pipe_through :api
 
     get "/", WelcomeController, :index
+    resources "/trainers", TrainersController
   end
 end
