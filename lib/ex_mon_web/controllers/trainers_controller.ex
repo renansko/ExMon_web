@@ -33,7 +33,7 @@ defmodule ExMonWeb.TrainersController do
     |> text("")
   end
 
-  defp handle_delete({:error, _reason} = error, conn), do: error
+  defp handle_delete({:error, _reason} = error, _conn), do: error
 
   defp handle_response({:ok, trainer}, conn, view, status) do
     conn
