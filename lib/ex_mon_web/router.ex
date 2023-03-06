@@ -23,7 +23,11 @@ defmodule ExMonWeb.Router do
   # Other scopes may use custom stacks.
   scope "/api", ExMonWeb do
     pipe_through :api
-    resources "/trainers", TrainersController
+    resources "/trainers", TrainersController, only: [:show, :delete, :update]
+
+    resources "/trainer_pokemons", TrainerPokemonsController,
+      only: [:create, :show, :delete, :update]
+
     get "/pokemons/:name", PokemonsController, :show
   end
 
@@ -60,6 +64,5 @@ defmodule ExMonWeb.Router do
     pipe_through :api
 
     get "/", WelcomeController, :index
-
   end
 end
