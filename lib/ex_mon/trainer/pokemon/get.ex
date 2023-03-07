@@ -5,14 +5,14 @@ defmodule ExMon.Trainer.Pokemon.Get do
 
   def call(id) do
     case UUID.cast(id) do
-      :error -> {:error, "Invalid ID format"}
+      :error -> {:error, "Invalid ID format", :unprocessable_entity}
       {:ok, uuid} -> get(uuid)
     end
   end
 
   defp get(uuid) do
     case Repo.get(Pokemon, uuid) do
-      nil -> {:error, "Pokemon not found!"}
+      nil -> {:error, "Pokemon not found!", :not_found}
       pokemon -> {:ok, Repo.preload(pokemon, :trainer)}
     end
   end

@@ -5,14 +5,14 @@ defmodule ExMon.Trainer.Pokemon.Delete do
 
   def call(id) do
     case UUID.cast(id) do
-      :error -> {:error, "Invalid ID format"}
+      :error -> {:error, "Invalid ID format", :unprocessable_entity}
       {:ok, uuid} -> delete(uuid)
     end
   end
 
   defp delete(uuid) do
     case fetch_pokemon(uuid) do
-      nil -> {:error, "pokemon not found!"}
+      nil -> {:error, "Pokemon not found!", :not_found}
       pokemon -> Repo.delete(pokemon)
     end
   end
