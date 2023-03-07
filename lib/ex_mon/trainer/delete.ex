@@ -5,7 +5,7 @@ defmodule ExMon.Trainer.Delete do
 
   def call(id) do
     case UUID.cast(id) do
-      :error -> {:error, "Invalid ID format"}
+      :error -> {:error, "Invalid ID format", :unprocessable_entity}
       {:ok, uuid} -> delete(uuid)
     end
   end

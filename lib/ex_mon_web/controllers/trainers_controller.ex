@@ -42,5 +42,5 @@ defmodule ExMonWeb.TrainersController do
     |> render(view, trainer: trainer)
   end
 
-  defp handle_response({:error, _changeset} = error, conn, _view, _status), do: error
+  defp handle_response({:error, _changeset, _stats} = error, _conn, _view, _status), do: error
 end

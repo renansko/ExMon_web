@@ -5,7 +5,7 @@ defmodule ExMon.Trainer.Update do
 
   def call(%{"id" => uuid} = params) do
     case UUID.cast(uuid) do
-      :error -> {:error, "Invalid ID format"}
+      :error -> {:error, "Invalid ID format", :unprocessable_entity}
       {:ok, _uuid} -> update(params)
     end
   end
