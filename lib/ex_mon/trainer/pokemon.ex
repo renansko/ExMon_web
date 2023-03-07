@@ -3,7 +3,6 @@ defmodule ExMon.Trainer.Pokemon do
   import Ecto.Changeset
 
   alias ExMon.Trainer
-  alias ExMon.Repo
 
   @primary_key {:id, Ecto.UUID, autogenerate: true}
   @foreign_key_type Ecto.UUID
