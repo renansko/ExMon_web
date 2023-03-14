@@ -21,4 +21,11 @@ defmodule ExMonWeb.FallBackController do
     |> put_view(ExMonWeb.ErrorView)
     |> render("error.json", result: result)
   end
+
+  def call(conn, {:error, result}) do
+    conn
+    |> put_status(:unauthorized)
+    |> put_view(ExMonWeb.ErrorView)
+    |> render("error.json", result: result)
+  end
 end

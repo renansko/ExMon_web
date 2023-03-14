@@ -1,9 +1,20 @@
 defmodule ExMonWeb.Controllers.TrainersControllerTest do
   use ExMonWeb.ConnCase
 
+  import ExMonWeb.Auth.Guardian
+
   alias ExMon.Trainer
 
   describe "show/2" do
+    setup %{conn: conn} do
+      params = %{name: "admin", password: "admin123"}
+      {:ok, trainer} = ExMon.create_trainer(params)
+      {:ok, token, _clains} = encode_and_sign(trainer)
+
+      conn = put_req_header(conn, "authorization", "Bearer #{token}")
+      {:ok, conn: conn}
+    end
+
     test "when are passed a valid trainer id, return a trainer", %{conn: conn} do
       params = %{name: "Jorge", password: "123456"}
 
