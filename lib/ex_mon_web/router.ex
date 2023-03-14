@@ -14,6 +14,10 @@ defmodule ExMonWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :auth do
+    plug ExMonWeb.Auth.Pipeline
+  end
+
   # scope "/", ExMonWeb do
   #   pipe_through :browser
 
@@ -23,12 +27,19 @@ defmodule ExMonWeb.Router do
   # Other scopes may use custom stacks.
   scope "/api", ExMonWeb do
     pipe_through :api
+    post "/trainers", TrainersController, :create
+
+    get "/pokemons/:name", PokemonsController, :show
+
+    post "trainers/signin", TrainersController, :sign_in
+  end
+
+  scope "/api", ExMonWeb do
+    pipe_through [:api, :auth]
     resources "/trainers", TrainersController, only: [:show, :delete, :update]
 
     resources "/trainer_pokemons", TrainerPokemonsController,
       only: [:create, :show, :delete, :update]
-
-    get "/pokemons/:name", PokemonsController, :show
   end
 
   # Enables LiveDashboard only for development
